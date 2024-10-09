@@ -4,7 +4,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
         <div class="flex-shrink-0">
-          <RouterLink><img class="h-16 w-auto" src="/images/logooo.png" alt="TANESCO"></RouterLink>
+          <RouterLink to="/"><img class="h-16 w-auto" src="/images/logooo.png" alt="TANESCO"></RouterLink>
           
         </div>
         <div class="hidden md:flex md:items-center md:space-x-1">
