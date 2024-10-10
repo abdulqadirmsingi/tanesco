@@ -1,6 +1,6 @@
 <!-- Navbar.vue -->
 <template>
-  <nav class="bg-green-700 shadow-lg sticky top-0 z-50 transition-all duration-300 ease-in-out">
+  <nav v-if="showNavbar" class="bg-green-700 shadow-lg sticky top-0 z-50 transition-all duration-300 ease-in-out">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
         <div class="flex-shrink-0">
@@ -86,15 +86,20 @@
 </template>
 
 <script>
+import { ref, onMounted, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router';
+
 export default {
   name: 'Navbar',
-  data() {
-    return {
-      isMobileMenuOpen: false,
-      openDropdown: null,
-      openMobileDropdown: null,
-      navItems: [
-        { name: 'Mwanzo', href: '/' },
+  setup() {
+    const router = useRouter();
+    const showNavbar = ref(true);
+    const isMobileMenuOpen = ref(false);
+    const openDropdown = ref(null);
+    const openMobileDropdown = ref(null);
+
+    const navItems = [
+       { name: 'Mwanzo', href: '/' },
         { 
           name: 'Kuhusu', 
           dropdownItems: [
@@ -125,13 +130,42 @@ export default {
         { name: 'Maswali', href: '/maswali' },
         { name: 'Mawasiliano', href: '/mawasiliano' },
         { name: 'Staff mail', href: '/staff-mail' },
-      ],
+
+    ];
+
+    const hideNavbar = () => {
+      showNavbar.value = false;
     };
-  },
-  methods: {
-    toggleMobileDropdown(index) {
-      this.openMobileDropdown = this.openMobileDropdown === index ? null : index;
-    }
+
+    const showNavbarAfterDelay = () => {
+      setTimeout(() => {
+        showNavbar.value = true;
+      }, 100); // Adjust this delay as needed
+    };
+
+    onMounted(() => {
+      router.beforeEach((to, from, next) => {
+        hideNavbar();
+        next();
+      });
+
+      router.afterEach(() => {
+        showNavbarAfterDelay();
+      });
+    });
+
+    const toggleMobileDropdown = (index) => {
+      openMobileDropdown.value = openMobileDropdown.value === index ? null : index;
+    };
+
+    return {
+      showNavbar,
+      isMobileMenuOpen,
+      openDropdown,
+      openMobileDropdown,
+      navItems,
+      toggleMobileDropdown
+    };
   }
 };
 </script>
