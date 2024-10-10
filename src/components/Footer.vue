@@ -34,12 +34,12 @@
           <h3 class="text-lg font-semibold mb-4">Kurasa</h3>
           <ul class="space-y-2">
             <li v-for="item in ['Mwanzo', 'Kuhusu-sisi', 'Mikopo', 'Machapisho', 'Maswali']" :key="item">
-              <RouterLink
-                :to="item === 'Mwanzo' ? '/' : `/${item.toLowerCase().replace(' ', '-')}`"
+              <a
+                :href="item === 'Mwanzo' ? '/' : `/${item.toLowerCase().replace(' ', '-')}`"
                 class="text-green-200 hover:text-white transition-colors duration-300"
               >
                 {{ item }}
-              </RouterLink>
+              </a>
             </li>
           </ul>
         </div>
