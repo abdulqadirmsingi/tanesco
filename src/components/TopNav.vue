@@ -4,8 +4,8 @@
     <div class="container mx-auto">
       <div class="flex flex-col sm:flex-row justify-between items-center">
         <!-- Email and Phone Section -->
-        <div class="flex flex-col sm:flex-row items-center mb-2 sm:mb-0">
-          <a href="mailto:info@tanesco.co.tz" class="text-sm hover:text-green-300 transition duration-300 flex items-center mb-2 sm:mb-0 sm:mr-4">
+        <div class="flex flex-row items-center mb-2 sm:mb-0 flex-wrap justify-center">
+          <a href="mailto:info@tanesco.co.tz" class="text-sm hover:text-green-300 transition duration-300 flex items-center mb-2 sm:mb-0 mr-4">
             <i class="pi pi-envelope mr-2"></i>
             <span>info@tanesco.co.tz</span>
           </a>
@@ -46,12 +46,12 @@ export default {
   .container {
     width: 100%;
   }
-  
+
   .flex-col > * {
     width: 100%;
     text-align: center;
   }
-  
+
   .space-x-4 {
     justify-content: center;
   }
