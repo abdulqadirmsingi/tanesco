@@ -48,12 +48,12 @@
           <h3 class="text-lg font-semibold mb-4">Mikopo</h3>
           <ul class="space-y-2">
             <li v-for="item in ['Bidhaa za Bosa', 'Bidhaa za FOSA', 'Loan Calculator']" :key="item">
-              <RouterLink
-                :to="item === 'Bidhaa za Bosa' || item == 'Bidhaa za FOSA' ? '/mikopo' : `/${item.toLowerCase().replace(' ', '-')}`"
+              <a
+                :href="item === 'Bidhaa za Bosa' || item == 'Bidhaa za FOSA' ? '/mikopo' : `/${item.toLowerCase().replace(' ', '-')}`"
                 class="text-green-200 hover:text-white transition-colors duration-300"
               >
                 {{ item }}
-              </RouterLink>
+              </a>
             </li>
           </ul>
         </div>

@@ -57,11 +57,11 @@
     <div :class="{ 'block': isMobileMenuOpen, 'hidden': !isMobileMenuOpen }" class="md:hidden">
       <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
         <template v-for="(item, index) in navItems" :key="index">
-          <RouterLink v-if="!item.dropdownItems" 
-             :to="item.href"
+          <a v-if="!item.dropdownItems" 
+             :href="item.href"
              class="text-white block px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 focus:outline-none focus:text-white focus:bg-green-600 transition duration-200 ease-in-out">
             {{ item.name }}
-          </RouterLink>
+          </a>
           <div v-else>
             <button @click="toggleMobileDropdown(index)"
                     class="text-white w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 focus:outline-none focus:text-white focus:bg-green-600 transition duration-200 ease-in-out flex justify-between items-center">
@@ -71,12 +71,12 @@
               </svg>
             </button>
             <div v-show="openMobileDropdown === index" class="mt-2 space-y-2 px-4">
-              <RouterLink v-for="dropdownItem in item.dropdownItems" 
+              <a v-for="dropdownItem in item.dropdownItems" 
                  :key="dropdownItem.name"
-                 :to="dropdownItem.href"
+                 :href="dropdownItem.href"
                  class="text-white block py-2 text-base font-medium hover:bg-green-600 transition duration-200 ease-in-out">
                 {{ dropdownItem.name }}
-              </RouterLink>
+              </a>
             </div>
           </div>
         </template>
