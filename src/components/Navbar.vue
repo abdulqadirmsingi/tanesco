@@ -5,15 +5,14 @@
       <div class="flex justify-between items-center h-20">
         <div class="flex-shrink-0">
           <RouterLink to="/"><img class="h-16 w-auto" src="/images/logooo.png" alt="TANESCO"></RouterLink>
-          
         </div>
         <div class="hidden md:flex md:items-center md:space-x-1">
           <div v-for="(item, index) in navItems" :key="index" class="relative group">
-            <RouterLink v-if="!item.dropdownItems" 
-               :to="item.href"
+            <a v-if="!item.dropdownItems" 
+               :href="item.href"
                class="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-green-600 focus:outline-none focus:text-white focus:bg-green-600 transition duration-200 ease-in-out inline-block">
               {{ item.name }}
-            </RouterLink>
+            </a>
             <div v-else class="relative group">
               <button @mouseenter="openDropdown = index"
                       @mouseleave="openDropdown = null"
@@ -28,12 +27,12 @@
                    :class="{'opacity-100 translate-y-0 visible': openDropdown === index, 'opacity-0 translate-y-1 invisible': openDropdown !== index}"
                    class="absolute z-10 left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 transition-all duration-200 ease-in-out">
                 <div class="py-1">
-                  <RouterLink v-for="dropdownItem in item.dropdownItems" 
+                  <a v-for="dropdownItem in item.dropdownItems" 
                      :key="dropdownItem.name"
-                     :to="dropdownItem.href"
+                     :href="dropdownItem.href"
                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition duration-150 ease-in-out">
                     {{ dropdownItem.name }}
-                  </RouterLink>
+                  </a>
                 </div>
               </div>
             </div>
@@ -86,7 +85,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue'; // CHANGED: Added 'watch'
 import { useRouter } from 'vue-router';
 
 export default {
@@ -113,7 +112,6 @@ export default {
           name: 'Mikopo', 
           dropdownItems: [
             { name: 'Bidhaa za BOSA', href: '/mikopo' },
-            // { name: 'Masharti', href: '#' },
             { name: 'Bidhaa za FOSA', href: '/mikopo' }
           ]
         },
@@ -130,7 +128,6 @@ export default {
         { name: 'Maswali', href: '/maswali' },
         { name: 'Mawasiliano', href: '/mawasiliano' },
         { name: 'Staff mail', href: '/staff-mail' },
-
     ];
 
     const hideNavbar = () => {
@@ -140,12 +137,20 @@ export default {
     const showNavbarAfterDelay = () => {
       setTimeout(() => {
         showNavbar.value = true;
-      }, 100); // Adjust this delay as needed
+      }, 100);
+    };
+
+    // NEW FUNCTION
+    const closeAllDropdowns = () => {
+      openDropdown.value = null;
+      openMobileDropdown.value = null;
+      isMobileMenuOpen.value = false;
     };
 
     onMounted(() => {
       router.beforeEach((to, from, next) => {
         hideNavbar();
+        closeAllDropdowns(); // CHANGED: Added this line
         next();
       });
 
@@ -157,6 +162,11 @@ export default {
     const toggleMobileDropdown = (index) => {
       openMobileDropdown.value = openMobileDropdown.value === index ? null : index;
     };
+
+    // NEW WATCHER
+    watch(() => router.currentRoute.value, () => {
+      closeAllDropdowns();
+    });
 
     return {
       showNavbar,
